@@ -1,21 +1,22 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#define RANGE 1001
 #define clean system("cls")//清屏
 #define pause system("pause")//暂停
-#define pau_cle system("pause");system("cls")//暂停+清屏
-long int tel[1000];//记录成员的电话
-char *name[1000];//记录成员的名字
+#define pause_clear system("pause");system("cls")//暂停+清屏
+long int tel[RANGE];//记录成员的电话
+char *name[RANGE];//记录成员的名字
 int num=0;//表示通讯录中成员的个数
 int index_list=-1;//作为在特定时候指定成员编号的数
 void allocates_memory()
 {
-    for(int k=0; k<1000; k++)
+    for(int k=0; k<RANGE; k++)
     {
         name[k]=(char*)malloc(sizeof(char)*10);
     }
 }
-void following()
+void listing()
 {
     for(int j=0; j<num; j++)
     {
@@ -56,12 +57,12 @@ void deleted()
         return;
     }
 }
-void look_for()
+int look_for_judge()
 {
     int judge;
     printf("按电话号码查找请输入0\n按姓名查找请输入1\n");
     scanf("%d",&judge);
-    judge==1?look_for_name():look_for_tel();
+    return judge;
 }
 int look_for_name()
 {
@@ -102,7 +103,7 @@ void log_in()
     printf("请输入名字:\n");
     scanf("%s",name[num]);
     printf("添加成功！\n");
-    num++;
+    num++;//成员+1
 }
 int main()
 {
@@ -116,12 +117,20 @@ int main()
         switch(n)
         {
             case 1:log_in();break;
-            case 2:look_for();break;
+            case 2:if(look_for_judge())
+            {
+                look_for_name();
+            }
+            else
+            {
+                look_for_tel();
+            }
+            break;
             case 3:deleted();break;
-            case 4:following();break;
+            case 4:listing();break;
             case 5:exit(1);break;
         }
-        pau_cle;
+        pause_clear;
     }
     return 0;
 }
