@@ -9,7 +9,7 @@ long int tel[RANGE];//记录成员的电话
 char *name[RANGE];//记录成员的名字
 int num=0;//表示通讯录中成员的个数
 int index_list=-1;//作为在特定时候指定成员编号的数
-void allocates_memory()
+void intialize_memory()
 {
     for(int k=0; k<RANGE; k++)
     {
@@ -23,18 +23,18 @@ void listing()
         printf("姓名:%s\t号码:%ld\n",name[j],tel[j]);
     }
 }
-void deleted()
+void cancel()
 {
     int look_index,ok,judge;
     printf("根据姓名删除联系人请输入1；\n根据号码删除联系人请输入2\n");
     scanf("%d",&judge);
     if(judge==1)
     {
-        look_index=look_for_name();
+        look_index=locating_name();
     }
     else
     {
-        look_index=look_for_tel();
+        look_index=locating_tel();
     }
     printf("确定删除吗？\n确定请按1；反悔请按2\n");
     scanf("%d",&ok);
@@ -57,14 +57,14 @@ void deleted()
         return;
     }
 }
-int look_for_judge()
+int locating_judge()
 {
     int judge;
     printf("按电话号码查找请输入0\n按姓名查找请输入1\n");
     scanf("%d",&judge);
     return judge;
 }
-int look_for_name()
+int locating_name()
 {
     char flag[10];
     printf("请输入名字:");
@@ -80,7 +80,7 @@ int look_for_name()
     printf("找不到（囧）\n");
     return -1;
 }
-int look_for_tel()
+int locating_tel()
 {
     int flag;
     printf("请输入电话号码:\n");
@@ -93,7 +93,7 @@ int look_for_tel()
             return j;
         }
     }
-    printf("找不到（囧）\n程序将返回主菜单\n");
+    printf("找不到（囧）\n");
     return -1;
 }
 void log_in()
@@ -107,7 +107,7 @@ void log_in()
 }
 int main()
 {
-    allocates_memory();
+    intialize_memory();
     while(1)
     {
         int n;
@@ -117,16 +117,16 @@ int main()
         switch(n)
         {
             case 1:log_in();break;
-            case 2:if(look_for_judge())
+            case 2:if(locating_judge())
             {
-                look_for_name();
+                locating_name();
             }
             else
             {
-                look_for_tel();
+                locating_tel();
             }
             break;
-            case 3:deleted();break;
+            case 3:cancel();break;
             case 4:listing();break;
             case 5:exit(1);break;
         }
