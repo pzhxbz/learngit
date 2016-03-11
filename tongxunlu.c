@@ -1,156 +1,127 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-long int tel[1000];
-char *name[1000];
-int i=0;
-int index_list=-1;
+#define clean system("cls")//æ¸…å±
+#define pause system("pause")//æš‚åœ
+#define pau_cle system("pause");system("cls")//æš‚åœ+æ¸…å±
+long int tel[1000];//è®°å½•æˆå‘˜çš„ç”µè¯
+char *name[1000];//è®°å½•æˆå‘˜çš„åå­—
+int num=0;//è¡¨ç¤ºé€šè®¯å½•ä¸­æˆå‘˜çš„ä¸ªæ•°
+int index_list=-1;//ä½œä¸ºåœ¨ç‰¹å®šæ—¶å€™æŒ‡å®šæˆå‘˜ç¼–å·çš„æ•°
+void allocates_memory()
+{
+    for(int k=0; k<1000; k++)
+    {
+        name[k]=(char*)malloc(sizeof(char)*10);
+    }
+}
 void following()
 {
-    for(int j=0;j<i;j++)
+    for(int j=0; j<num; j++)
     {
-        printf("ĞÕÃû:%s\tºÅÂë:%ld\n",name[j],tel[j]);
+        printf("å§“å:%s\tå·ç :%ld\n",name[j],tel[j]);
     }
-    system("pause");
 }
-void shanchu(int a)
+void deleted()
 {
-    printf("É¾³ıÖĞ\n");
-    for(int j=a;j<i;j++)
+    int look_index,ok,judge;
+    printf("æ ¹æ®å§“ååˆ é™¤è”ç³»äººè¯·è¾“å…¥1ï¼›\næ ¹æ®å·ç åˆ é™¤è”ç³»äººè¯·è¾“å…¥2\n");
+    scanf("%d",&judge);
+    if(judge==1)
     {
-        tel[j]=tel[j+1];
-        name[j]=name[j+1];
+        look_index=look_for_name();
     }
-    index_list=-1;
-    printf("É¾³ı³É¹¦\n");
-    i-=1;
-    system("pause");
+    else
+    {
+        look_index=look_for_tel();
+    }
+    printf("ç¡®å®šåˆ é™¤å—ï¼Ÿ\nç¡®å®šè¯·æŒ‰1ï¼›åæ‚”è¯·æŒ‰2\n");
+    scanf("%d",&ok);
+    if(ok==2)
+    {
+        printf("åˆ é™¤å–æ¶ˆ\n");
+        return;
+    }
+    else
+    {
+        printf("åˆ é™¤ä¸­\n");
+        for(int j=look_index; j<num; j++)
+        {
+            tel[j]=tel[j+1];
+            name[j]=name[j+1];
+        }
+        index_list=-1;
+        printf("åˆ é™¤æˆåŠŸ\n");
+        num-=1;
+        return;
+    }
+}
+void look_for()
+{
+    int judge;
+    printf("æŒ‰ç”µè¯å·ç æŸ¥æ‰¾è¯·è¾“å…¥0\næŒ‰å§“åæŸ¥æ‰¾è¯·è¾“å…¥1\n");
+    scanf("%d",&judge);
+    judge==1?look_for_name():look_for_tel();
 }
 int look_for_name()
 {
     char flag[10];
-    printf("ÇëÊäÈëÃû×Ö:");
+    printf("è¯·è¾“å…¥åå­—:");
     scanf("%s",flag);
-    if(i==1)
-    {
-        following();
-        return 1;
-    }
-    for(int j=0;j<i;j++)
+    for(int j=0; j<num; j++)
     {
         if(!strcmp(name[j],flag))
         {
-            printf("ºÅÂëÊÇ:%ld\tÃû×ÖÊÇ:%s\n",tel[j],name[j]);
+            printf("å·ç æ˜¯:%ld\tåå­—æ˜¯:%s\n",tel[j],name[j]);
             return j;
         }
     }
-    printf("ÕÒ²»µ½£¨‡å£©\n");
+    printf("æ‰¾ä¸åˆ°ï¼ˆå›§ï¼‰\n");
     return -1;
 }
 int look_for_tel()
 {
     int flag;
-    printf("ÇëÊäÈëµç»°ºÅÂë:\n");
+    printf("è¯·è¾“å…¥ç”µè¯å·ç :\n");
     scanf("%d",&flag);
-    for(int j=0;j<i;j++)
+    for(int j=0; j<num; j++)
     {
         if(flag==tel[j])
         {
-            printf("ºÅÂëÊÇ:%ld\tÃû×ÖÊÇ:%s\n",tel[j],name[j]);
+            printf("å·ç æ˜¯:%ld\tåå­—æ˜¯:%s\n",tel[j],name[j]);
             return j;
         }
     }
-    printf("ÕÒ²»µ½£¨‡å£©\n³ÌĞò½«·µ»ØÖ÷²Ëµ¥\n");
+    printf("æ‰¾ä¸åˆ°ï¼ˆå›§ï¼‰\nç¨‹åºå°†è¿”å›ä¸»èœå•\n");
     return -1;
 }
-void luru()
+void log_in()
 {
-    system("cls");
-    printf("ÇëÊäÈëµç»°ºÅÂë:\n");
-    scanf("%ld",&tel[i]);
-    printf("ÇëÊäÈëÃû×Ö:\n");
-    scanf("%s",name[i]);
-    system("cls");
-    i++;
+    printf("è¯·è¾“å…¥ç”µè¯å·ç :\n");
+    scanf("%ld",&tel[num]);
+    printf("è¯·è¾“å…¥åå­—:\n");
+    scanf("%s",name[num]);
+    printf("æ·»åŠ æˆåŠŸï¼\n");
+    num++;
 }
 int main()
 {
-    for(int k=0;k<1000;k++)
-    {
-        name[k]=(char*)malloc(sizeof(char)*10);
-    }
+    allocates_memory();
     while(1)
     {
-        printf("ÇëÊäÈëÄãĞèÒª½øĞĞµÄ²Ù×÷£º\n1ÎªÌí¼ÓÁªÏµÈË;\n2Îª²éÕÒÁªÏµÈË;\n3ÎªÉ¾³ıÁªÏµÈË;\n4ÎªÁĞ³öËùÓĞÁªÏµÈË;\n5ÎªÍË³ö³ÌĞò\n");
         int n;
+        printf("è¯·è¾“å…¥ä½ éœ€è¦è¿›è¡Œçš„æ“ä½œï¼š\n1ä¸ºæ·»åŠ è”ç³»äºº;\n2ä¸ºæŸ¥æ‰¾è”ç³»äºº;\n3ä¸ºåˆ é™¤è”ç³»äºº;\n4ä¸ºåˆ—å‡ºæ‰€æœ‰è”ç³»äºº;\n5ä¸ºé€€å‡ºç¨‹åº\n");
         scanf("%d",&n);
-        if(n==5)
+        clean;
+        switch(n)
         {
-            for(int k=0;k<1000;k++)
-            {
-                name[k]=NULL;
-            }
-            exit(1);
+            case 1:log_in();break;
+            case 2:look_for();break;
+            case 3:deleted();break;
+            case 4:following();break;
+            case 5:exit(1);break;
         }
-        if(n==1)
-        {
-            luru();
-        }
-        if(n==2)
-        {
-            system("cls");
-            printf("°´µç»°ºÅÂë²éÕÒÇëÊäÈë0\n°´ĞÕÃû²éÕÒÇëÊäÈë1\n");
-            int judge;
-            scanf("%d",&judge);
-            if(judge)
-            {
-                 look_for_name();
-            }
-            else
-            {
-                 look_for_tel();
-            }
-            system("pause");
-            system("cls");
-        }
-        if(n==3)
-        {
-            system("cls");
-            printf("¸ù¾İĞÕÃûÉ¾³ıÁªÏµÈËÇëÊäÈë1£»¸ù¾İºÅÂëÉ¾³ıÁªÏµÈËÇëÊäÈë2\n");
-            int m;
-            scanf("%d",&m);
-            int look_index,ok;
-            if(m==1)
-            {
-                look_index=look_for_name();
-            }
-            if(m==2)
-            {
-                look_index=look_for_tel();
-            }
-                if(look_index==-1)
-                {
-                    continue;
-                }
-                printf("È·¶¨É¾³ıÂğ£¿\nÈ·¶¨Çë°´1£»·´»ÚÇë°´2\n");
-                scanf("%d",&ok);
-                if(ok==2)
-                {
-                    printf("³ÌĞò½«·µ»ØÖ÷²Ëµ¥\n");
-                    system("pause");
-                }
-                if(ok==1)
-                {
-                    shanchu(look_index);
-                }
-                system("cls");
-        }
-        if(n==4)
-        {
-            system("cls");
-            following();
-            system("cls");
-        }
+        pau_cle;
     }
     return 0;
 }
