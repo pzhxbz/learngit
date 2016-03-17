@@ -53,7 +53,7 @@ link hello.obj
 		code segment             定义一个代码段
 		assume cs:code, ds:data  这里把程序中定义的段与对应的段寄存器关联起来
 		start:                   程序开始
-        mov ax,data			     把数据赋给寄存器ax（起一个过渡作用）
+        mov ax,data			     把数据赋给寄存器ax（起一个过渡作用）（2）
         mov ds,ax                这里把数据段的地址放到数据段寄存器ds中
         lea dx,tab               把要输出的字符串名让dx储存
         mov ah,9h			     （3）
